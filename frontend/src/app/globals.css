@@ -1,0 +1,121 @@
+@import "tailwindcss";
+
+/*
+ * Design tokens de l'application Abricot.
+ * Valeurs extraites des styles locaux de la maquette Figma : les noms suivent
+ * ceux de Figma (Brand / Neutral / System, Headings / Body / Caption).
+ */
+@theme {
+  /*
+   * On retire la palette par défaut de Tailwind : seules les couleurs de la
+   * maquette sont disponibles, ce qui évite d'utiliser une teinte hors charte.
+   */
+  --color-*: initial;
+
+  /* Brand */
+  --color-brand: #ff8b42; /* Brand/Main orange */
+  --color-brand-dark: #d3590b; /* Brand/Dark orange */
+  --color-brand-light: #ffe8d9; /* Brand/Light orange */
+
+  /* Neutral */
+  --color-white: #ffffff;
+  --color-black: #000000; /* utilisé dans la maquette sans être déclaré en style */
+  --color-grey-50: #f9fafb;
+  --color-grey-100: #f3f4f6;
+  --color-grey-200: #e5e7eb;
+  --color-grey-400: #9ca3af;
+  --color-grey-600: #6b7280;
+  --color-grey-800: #1f1f1f;
+  --color-grey-950: #0f0f0f;
+
+  /* System (statuts, alertes, messages) */
+  --color-success: #27ae60;
+  --color-success-light: #f1fff7;
+  --color-error: #ef4444;
+  --color-error-light: #ffe0e0;
+  /*
+   * Absent de la maquette : texte des messages d'erreur. Le rouge "error" n'a
+   * pas un contraste suffisant pour du texte (3.6:1 sur grey-50, AA exige 4.5:1).
+   */
+  --color-error-dark: #b91c1c;
+  --color-warning: #e08d00;
+  --color-warning-light: #fff0d7;
+  --color-info: #3b82f6;
+  --color-info-light: #e0ecff;
+
+  /*
+   * Échelle typographique (classes text-h1 … text-caption-s).
+   * Les interlignes reproduisent la hauteur "auto" de Figma.
+   */
+  --text-h1: 2.5rem; /* 40px */
+  --text-h1--line-height: 1.172;
+  --text-h1--font-weight: 700;
+  --text-h2: 2rem; /* 32px */
+  --text-h2--line-height: 1.366;
+  --text-h2--font-weight: 700;
+  --text-h3: 1.75rem; /* 28px */
+  --text-h3--line-height: 1.366;
+  --text-h3--font-weight: 600;
+  --text-h4: 1.5rem; /* 24px */
+  --text-h4--line-height: 1.366;
+  --text-h4--font-weight: 600;
+  --text-h5: 1.125rem; /* 18px */
+  --text-h5--line-height: 1.366;
+  --text-h5--font-weight: 600;
+
+  --text-body-l: 1.125rem; /* 18px */
+  --text-body-l--line-height: 1.21;
+  --text-body-m: 1rem; /* 16px */
+  --text-body-m--line-height: 1.21;
+  --text-body-s: 0.875rem; /* 14px */
+  --text-body-s--line-height: 1.21;
+  --text-body-xs: 0.75rem; /* 12px */
+  --text-body-xs--line-height: 1.21;
+  --text-body-2xs: 0.625rem; /* 10px */
+  --text-body-2xs--line-height: 1.21;
+
+  --text-caption-l: 0.875rem; /* 14px */
+  --text-caption-l--line-height: 1.21;
+  --text-caption-l--letter-spacing: 0.02em;
+  --text-caption-m: 0.75rem; /* 12px */
+  --text-caption-m--line-height: 1.21;
+  --text-caption-m--letter-spacing: 0.02em;
+  --text-caption-s: 0.625rem; /* 10px */
+  --text-caption-s--line-height: 1.21;
+  --text-caption-s--letter-spacing: 0.02em;
+}
+
+/*
+ * Polices chargées par next/font dans layout.tsx (variables --font-inter et
+ * --font-manrope). "inline" est nécessaire car ces variables sont définies
+ * sur <html> et non dans le thème.
+ */
+@theme inline {
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif; /* texte courant */
+  --font-heading: var(--font-manrope), ui-sans-serif, system-ui, sans-serif; /* titres */
+}
+
+@layer base {
+  body {
+    @apply bg-grey-50 text-body-m text-grey-950;
+  }
+
+  /*
+   * Tous les titres de la maquette sont en Manrope. La taille reste portée par
+   * les classes text-h1 … text-h5 pour ne pas lier le niveau sémantique du
+   * titre à son apparence (accessibilité).
+   */
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-heading;
+  }
+
+  /* Focus visible sur tous les éléments interactifs (WCAG 2.4.7) */
+  :focus-visible {
+    @apply outline-2 outline-offset-2 outline-brand-dark;
+  }
+}
