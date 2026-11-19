@@ -1,0 +1,20 @@
+# Dépendances et builds (chaque projet a aussi son propre .gitignore)
+node_modules/
+.next/
+dist/
+
+# Variables d'environnement : ne jamais versionner les secrets
+.env
+.env.*
+!.env.example
+
+# Base de données locale (recréée avec prisma migrate + seed)
+*.db
+*.sqlite
+*.sqlite3
+
+# Systèmes et éditeurs
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
