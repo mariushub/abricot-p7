@@ -61,6 +61,14 @@ export type ProjectDetail = ProjectSummary & {
   tasks: TaskBase[];
 };
 
+/** Tâche proposée par l'IA (POST /api/projects/:id/tasks/generate), pas encore enregistrée. */
+export type GeneratedTask = {
+  title: string;
+  description: string;
+  /** Format AAAA-MM-JJ, comme un champ <input type="date">. */
+  dueDate: string;
+};
+
 export type TaskAssignee = {
   id: string;
   user: User;

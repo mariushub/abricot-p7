@@ -51,6 +51,7 @@ Navigateur ──fetch──▶ Routes /api du front (src/app/api) ──JWT─�
 | `/api/projects`                            | GET, POST        | Projets (avec leurs tâches pour la progression) ; création         |
 | `/api/projects/:id`                        | GET, PUT, DELETE | Projet et ses tâches ; modification et contributeurs ; suppression |
 | `/api/projects/:id/tasks`                  | POST             | Création d'une tâche                                               |
+| `/api/projects/:id/tasks/generate`         | POST             | Propositions de tâches par l'IA (Gemini), sans enregistrement      |
 | `/api/projects/:id/tasks/:taskId`          | PUT, DELETE      | Modification, suppression d'une tâche                              |
 | `/api/projects/:id/tasks/:taskId/comments` | POST             | Ajout d'un commentaire                                             |
 | `/api/users/search?query=`                 | GET              | Recherche d'utilisateurs (choix des contributeurs)                 |
@@ -111,7 +112,14 @@ npx playwright show-report        # rapport détaillé du dernier lancement
 
 Droits appliqués dans l'interface (et vérifiés par le backend) : le propriétaire et les administrateurs d'un projet peuvent le modifier et gérer ses contributeurs ; seul le propriétaire peut le supprimer ; tous les membres gèrent les tâches.
 
-Hors périmètre : la génération de tâches par IA.
+### Génération de tâches par IA
+
+Le bouton « IA » de la page projet ouvre une modale : l'utilisateur décrit son besoin, l'IA propose jusqu'à 6 tâches (titre, description, échéance), puis il coche celles à ajouter.
+
+- **Fournisseur** : Gemini (`gemini-3.1-flash-lite` par défaut, modifiable avec `GEMINI_MODEL`), appelé avec `fetch` : aucune dépendance ajoutée. Clé gratuite sur [Google AI Studio](https://aistudio.google.com), à mettre dans `GEMINI_API_KEY`.
+- **Sécurité** : la clé reste sur le serveur ; le navigateur n'appelle que la route `/api/projects/:id/tasks/generate`, qui vérifie aussi que l'utilisateur est membre du projet.
+- **Fiabilité** : la réponse est demandée au format JSON (schéma imposé), puis revérifiée par la route (titres, longueur, dates valides et futures). Délai maximal de 30 secondes et messages clairs en cas de quota atteint ou de service surchargé.
+- **Contrôle** : rien n'est enregistré sans validation de l'utilisateur ; les tâches retenues passent par la route de création habituelle, avec les mêmes validations.
 
 ### Choix d'implémentation
 

@@ -18,7 +18,8 @@ export function CreateTaskButton({ projectId, people }: CreateTaskButtonProps) {
 
   return (
     <>
-      <Button onClick={() => setIsOpen(true)} aria-haspopup="dialog">
+      {/* Largeur de la maquette (141 px) : marges intérieures réduites. */}
+      <Button onClick={() => setIsOpen(true)} aria-haspopup="dialog" className="sm:px-2.5!">
         Créer une tâche
       </Button>
       <Modal title="Créer une tâche" isOpen={isOpen} onClose={() => setIsOpen(false)}>

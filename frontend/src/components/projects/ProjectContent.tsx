@@ -7,6 +7,7 @@ import { ArrowLeftIcon } from "@/components/icons/ArrowLeftIcon";
 import { ContributorsBar } from "@/components/projects/ContributorsBar";
 import { EditProjectButton } from "@/components/projects/EditProjectButton";
 import { CreateTaskButton } from "@/components/tasks/CreateTaskButton";
+import { GenerateTasksButton } from "@/components/tasks/GenerateTasksButton";
 import { ProjectTasks } from "@/components/tasks/ProjectTasks";
 import { useApi } from "@/hooks/useApi";
 import { canManageProject, getProjectPeople, isProjectOwner } from "@/lib/projects";
@@ -58,7 +59,10 @@ export function ProjectContent({ projectId }: { projectId: string }) {
             )}
           </div>
         </div>
-        <CreateTaskButton projectId={project.id} people={people} />
+        <div className="flex shrink-0 flex-wrap gap-3">
+          <CreateTaskButton projectId={project.id} people={people} />
+          <GenerateTasksButton projectId={project.id} />
+        </div>
       </header>
 
       <ContributorsBar people={people} />
